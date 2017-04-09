@@ -1,0 +1,90 @@
+<html>
+    <head>
+        <title>gogen puzzle</title>
+    </head>
+    <body>
+        Hello world
+        <script src="lodash.min.js"></script>
+        <script src="bible.js"></script>
+        <script>
+            // Utils
+            
+            function getRandomArrayElements(arr, count) {
+                var shuffled = arr.slice(0), i = arr.length, min = i - count, temp, index;
+                while (i-- > min) {
+                    index = Math.floor((i + 1) * Math.random());
+                    temp = shuffled[index];
+                    shuffled[index] = shuffled[i];
+                    shuffled[i] = temp;
+                }
+                return shuffled.slice(min);
+            }
+
+            // Form dictionary
+            var dictionary = [];
+            _.each(bible,function(episode){
+                 _.each(episode,function(chapter){
+                     _.each(chapter,function(verse){
+                        _.each(verse.split(" "),function(word){
+                            if(word.toLowerCase().indexOf("z")<0){
+                                var finalword =word.toLowerCase().trim().replace(/[^\w\s]/gi, '').replace(/[0-9]/g, "");
+                                if(finalword.length === _.uniq(finalword.split("")).length && finalword.length >=3)
+                                dictionary.push(finalword)
+                            }
+                        })
+                    })
+                })
+            })
+            dictionary = _.uniq(dictionary);
+            console.log(dictionary.length);
+
+            // Build a board
+            var board =[];
+            board[0]= [0,0,0,0,0];
+            board[1]= [0,0,0,0,0];
+            board[2]= [0,0,0,0,0];
+            board[3]= [0,0,0,0,0];
+            board[4]= [0,0,0,0,0];
+            var randomword = getRandomArrayElements(dictionary,1);
+            var fit = false;
+            console.log(randomword);
+            while(fit===false){
+                var row = _.random(0, 4);
+                var col = _.random(0, 4);
+                board[row][col] = randomword[0][0];
+                                   
+               
+                _.each(randomword[0].split(""),function(l,i){ 
+                    if(i!==0) {
+                         var dir = {
+                            top : row === 0 ? undefined : board[row-1][col] === 0,
+                            bottom : row === 4 ? undefined : board[row+1][col] === 0,
+                            left :  board[row][col-1] ===0,
+                            right : board[row][col+1] ===0,
+                            topleft : row === 0 ? undefined : board[row-1][col-1] === 0,
+                            topright :row === 0 ? undefined :  board[row-1][col+1] === 0,
+                            bottomleft : row === 4 ? undefined : board[row+1][col-1] === 0,
+                            bottomright : row === 4 ? undefined : board[row+1][col+1]=== 0,
+                            
+                        }
+                        var validdir = [];
+                        _.each(dir,function(d,e){
+                            if(d) validdir.push(e);
+                        })
+                        console.log(validdir);
+                        //console.log(dir)
+                        //console.log(l);
+                    }
+                })
+                
+                fit=true;
+            }
+            console.log("----")
+            _.each(board,function(row){
+                console.log(row)
+            })
+
+           
+        </script>
+    </body>
+</html>

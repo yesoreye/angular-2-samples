@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>oodha.com</title>
+    <base href="/"></base>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/bower_components/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/app.css">
+    <script src="/vendors/pace.min.js"></script>
+    <script src="/bower_components/socket.io-client/dist/socket.io.min.js"></script>
+    <script src="node_modules/core-js/client/shim.min.js"></script>
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/systemjs/dist/system.src.js"></script>
+    <script src="systemjs.config.js"></script>
+    <script>
+      Pace.options.ajax.trackWebSockets = false;
+    </script>
+    <script src="js/framework.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+      System.import('main.js').catch(function(err){ console.error(err); });
+    </script>
+  </head>
+  <body class="app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden">
+    <my-app>Loading..</my-app>
+  </body>
+</html>
